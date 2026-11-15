@@ -160,10 +160,10 @@ ${topH}<div class="fwrap" id="lx"></div></div></div>`;
    keyH=k=>{if(/^[1-4]$/.test(k)&&+k<=os.length&&!state){pick(+k-1);return true}if((k==='Enter'||k===' ')&&state===2){result(false);return true}}}
   else{box.innerHTML=bar()+`<div class="lq">${kind('Skriv svaret')}<textarea id="lW" rows="3" placeholder="Skriv svaret ditt her"></textarea><div id="lF"><div class="fact"><button class="btn pri" id="lS" disabled>Vis fasit</button></div><p class="fhint">Du må skrive et svar før du kan se fasiten. Enter viser fasiten.</p></div></div>`+tools();
    const ta=$('#lW');let open=false;
-   const reveal=()=>{if(open||!ta.value.trim())return;open=true;ta.readOnly=true;ta.blur();
-    $('#lF').innerHTML=`<div class="lans"><small>Fasit</small>${esc(right)}</div><div class="fact"><button class="btn fno" id="bN">✗ Kunne ikke</button><button class="btn fyes" id="bY">✓ Kunne</button></div><p class="fhint">Sammenlign med det du skrev, og velg selv. Taster: ← kunne ikke, → kunne.</p>`;
+   const reveal=()=>{if(open||!ta.value.trim())return;open=true;const first=ta.value.trim();
+    $('#lF').innerHTML=`<div class="lans mine"><small>Du svarte</small>${esc(first)}</div><div class="lans"><small>Fasit</small>${esc(right)}</div><div class="fact"><button class="btn fno" id="bN">✗ Kunne ikke</button><button class="btn fyes" id="bY">✓ Kunne</button></div><p class="fhint">Sammenlign svaret ditt med fasiten, og velg selv. Du kan skrive videre i feltet, for eksempel for å skrive av fasiten. Piltastene virker når du klikker utenfor feltet.</p>`;
     $('#bN').onclick=()=>result(false);$('#bY').onclick=()=>result(true)};
-   $('#lS').onclick=reveal;ta.oninput=()=>{$('#lS').disabled=!ta.value.trim()};ta.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&!open){e.preventDefault();reveal()}};
+   $('#lS').onclick=reveal;ta.oninput=()=>{if(!open)$('#lS').disabled=!ta.value.trim()};ta.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&!open){e.preventDefault();reveal()}};
    bindTools();try{ta.focus({preventScroll:true})}catch(e){}
    keyH=k=>{if(!open)return;if(k==='ArrowLeft'||k==='1'){result(false);return true}if(k==='ArrowRight'||k==='2'){result(true);return true}}}};
  begin()};

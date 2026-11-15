@@ -328,3 +328,4 @@ body.fcfull .fface{min-height:min(54vh,480px)}
 #fcRoot .srb button{background:var(--gb);border-color:transparent}
 #fcRoot .srb button:hover:not(:disabled){border-color:var(--g)}
 #fcRoot .srb b{color:var(--g)}
+.lans.mine{background:var(--panel2);margin-bottom:8px}
