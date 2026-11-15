@@ -20,7 +20,7 @@ W.sampling=r=>{const u=ui(r,'Sampling og aliasing');u.params({
  u.svg(plot({h:220,x:[0,T],y:[-1.3,1.3],xl:'tid (ms)',xt:[0,.5,1,1.5,2],yt:[-1,0,1],aria:'Signal med sampler',
   s:[{p:t.map(x=>[x,Math.sin(2*Math.PI*v.f*x)]),c:'var(--c5)',w:1.3}].concat(ok?[]:[{p:t.map(x=>[x,sg*Math.sin(2*Math.PI*al*x)]),c:'var(--c2)',w:2.2,d:'7 4'}]),
   post:(X,Y)=>sm.map(x=>`<circle cx="${X(x)}" cy="${Y(Math.sin(2*Math.PI*v.f*x))}" r="3.2" fill="var(--c1)"/>`).join('')}));
- u.out(ok?`<span class="okc">Ingen aliasing.</span> $f_s=${v.s}$ kHz $\\ge 2f=${2*v.f}$ kHz. Prøvene bestemmer signalet entydig.`:`<span class="noc">Aliasing.</span> $f_s=${v.s}$ kHz $< 2f=${2*v.f}$ kHz. De samme prøvene passer også på den stiplede bølgen på ${al.toFixed(1)} kHz. Mottakeren kan ikke se forskjell.`)})};
+ u.out(ok?`<span class="okc">Ingen aliasing.</span> $f_s=${v.s}$ kHz $\\ge 2f=${2*v.f}$ kHz. Prøvene bestemmer signalet entydig.`:`<span class="noc">Aliasing.</span> $f_s=${v.s}$ kHz $< 2f=${2*v.f}$ kHz. De samme prøvene passer også på den stiplede bølgen på $|f-k f_s|=$ ${al.toFixed(1)} kHz, der $k$ er det hele tallet nærmest $f/f_s$. Mottakeren kan ikke se forskjell.`)})};
 
 W.quant=r=>{const u=ui(r,'Kvantisering: lineær mot ikke-lineær');u.params({
  b:{l:'Antall bit',min:2,max:6,v:3,f:x=>x+' bit = '+2**x+' nivåer'},
@@ -32,7 +32,7 @@ W.quant=r=>{const u=ui(r,'Kvantisering: lineær mot ikke-lineær');u.params({
  let eL=0,eS=0,sL=0,sS=0;t.forEach(x=>{const a=sig(x),e=(a-Q(a))**2;if(x<.3){eL+=e;sL+=a*a}if(x>.65){eS+=e;sS+=a*a}});
  const db=(a,b)=>10*Math.log10(a/Math.max(b,1e-9));
  u.svg(plot({h:210,x:[0,1],y:[-1,1],xl:'tid',yt:[-1,0,1],aria:'Kvantisert signal',s:[{p:t.map(x=>[x,sig(x)]),c:'var(--c5)',w:1.2},{p:t.map(x=>[x,Q(sig(x))]),c:'var(--c1)',w:1.8}]}));
- u.out(`Signal-til-kvantiseringsstøy: sterk del <span class="v">${db(sL,eL).toFixed(1)} dB</span>, svak del <span class="v">${db(sS,eS).toFixed(1)} dB</span>. Bytt metode og se at den svake delen blir mye bedre med companding, fordi nivåene ligger tettest ved lave amplituder.`)})};
+ u.out(`Signal-til-kvantiseringsstøy $=10\\log_{10}(P_\\text{signal}/P_\\text{støy})$: sterk del <span class="v">${db(sL,eL).toFixed(1)} dB</span>, svak del <span class="v">${db(sS,eS).toFixed(1)} dB</span>. Bytt metode og se at den svake delen blir mye bedre med companding, fordi nivåene ligger tettest ved lave amplituder.`)})};
 
 W.filter=r=>{const u=ui(r,'Filtre i frekvensplanet');const tones=[.3,.7,1,1.5,2,3,4,5];u.params({
  t:{l:'Filtertype',opt:[['lp','Lavpass'],['hp','Høypass'],['bp','Båndpass']]},
@@ -55,7 +55,7 @@ W.db=r=>{const u=ui(r,'Desibel-kalkulator: effekt gjennom en link');u.params({
  <rect x="197" y="35" width="106" height="50" rx="7" fill="var(--badbg)"/><text x="250" y="56" text-anchor="middle" class="m" font-size="14">−${v.l} dB</text><text x="250" y="75" text-anchor="middle" font-size="12">tap</text>
  <rect x="377" y="35" width="106" height="50" rx="7" fill="var(--goodbg)"/><text x="430" y="56" text-anchor="middle" class="m" font-size="14">+${v.g} dB</text><text x="430" y="75" text-anchor="middle" font-size="12">forsterker</text>
  <rect x="537" y="35" width="100" height="50" rx="7" fill="var(--accbg)"/><text x="587" y="56" text-anchor="middle" class="m" font-size="14">${o.toFixed(1)} dBm</text><text x="587" y="75" text-anchor="middle" font-size="12">mottaker</text></svg>`);
- u.out(`$10\\log_{10}(${v.p<1?v.p.toFixed(3):v.p.toFixed(2)}/1)=${pd.toFixed(2)}$ dBm. Ut: $10^{${o.toFixed(1)}/10}=$ <span class="v">${om<.001?om.toExponential(2):om.toFixed(4)} mW</span>. Legg merke til regnestykket: dBm − dB + dB = dBm. To dBm-verdier adderes aldri.`)})};
+ u.out(`$P_{dBm}=10\\log_{10}(P/1\\,\\text{mW})=10\\log_{10}(${v.p<1?v.p.toFixed(3):v.p.toFixed(2)}/1)=${pd.toFixed(2)}$ dBm. Ut: $P_{ut}=P_{inn}-L+G=${o.toFixed(1)}$ dBm, og $P_{mW}=10^{P_{dBm}/10}=10^{${o.toFixed(1)}/10}=$ <span class="v">${om<.001?om.toExponential(2):om.toFixed(4)} mW</span>. Legg merke til regnestykket: dBm − dB + dB = dBm. To dBm-verdier adderes aldri.`)})};
 
 W.lambda=r=>{const u=ui(r,'Frekvens, bølgelengde og antennestørrelse');const apps=[[3e3,'Stemme (300 Hz–3 kHz)'],[1e6,'AM-radio'],[1e8,'FM-radio (100 MHz)'],[8e8,'4G/5G lavbånd'],[2.4e9,'Wi-Fi, Bluetooth'],[3.5e9,'5G midtbånd'],[5e9,'Wi-Fi 5 GHz'],[2.8e10,'5G mmWave'],[1e11,'Sub-THz (6G)']];
  u.params({f:{l:'Frekvens',min:300,max:3e11,log:1,v:2.4e9,f:x=>C.fmt(x,2)+'Hz'}},v=>{
@@ -72,7 +72,7 @@ W.capacity=r=>{const u=ui(r,'Nyquist mot Shannon');u.params({
  const snr=10**(v.s/10),sh=v.B*Math.log2(1+snr),ny=2*v.B*Math.log2(v.M),ss=R(-10,50,120);const ym=v.B*17.5;
  u.svg(plot({h:230,x:[-10,50],y:[0,ym],xl:'SNR (dB)',yl:'kapasitet (Mbps)',xt:[-10,0,10,20,30,40,50],yt:[0,ym/2,ym].map(Math.round),aria:'Kapasitet som funksjon av SNR',
   s:[{p:ss.map(x=>[x,v.B*Math.log2(1+10**(x/10))])},{p:[[-10,ny],[50,ny]],c:'var(--c2)',d:'6 4'}],post:(X,Y)=>`<circle cx="${X(v.s)}" cy="${Y(sh)}" r="5" fill="var(--c1)"/>`}));
- u.out(`Lineær SNR $=10^{${v.s}/10}=$ <span class="v">${snr<100?snr.toFixed(2):Math.round(snr)}</span>. Shannon: <span class="v">${sh.toFixed(1)} Mbps</span> (heltrukket). Nyquist med $M=${v.M}$: <span class="v">${ny.toFixed(0)} Mbps</span> (stiplet). Reelt tak: <b>${Math.min(sh,ny).toFixed(1)} Mbps</b>, fordi ${sh<ny?'støyen er begrensningen':'antall signalnivåer er begrensningen'}.`)})};
+ u.out(`Lineær SNR $=10^{${v.s}/10}=$ <span class="v">${snr<100?snr.toFixed(2):Math.round(snr)}</span>. Shannon $C=B\\log_2(1+SNR)=$ <span class="v">${sh.toFixed(1)} Mbps</span> (heltrukket). Nyquist $C=2B\\log_2 M$ med $M=${v.M}$: <span class="v">${ny.toFixed(0)} Mbps</span> (stiplet). Reelt tak: <b>${Math.min(sh,ny).toFixed(1)} Mbps</b>, fordi ${sh<ny?'støyen er begrensningen':'antall signalnivåer er begrensningen'}.`)})};
 
 W.fspl=r=>{const u=ui(r,'Frittromstap');u.params({
  f:{l:'Frekvens',min:1e8,max:1e11,log:1,v:2.4e9,f:x=>C.fmt(x,2)+'Hz'},
@@ -80,7 +80,7 @@ W.fspl=r=>{const u=ui(r,'Frittromstap');u.params({
  g:{l:'Gt + Gr (sum antennegain)',min:0,max:100,v:0,f:x=>x+' dB'}},v=>{
  const lam=3e8/v.f,L=d=>20*Math.log10(4*Math.PI*d/lam)-v.g,ds=R(0,7.7,100).map(x=>10**x);
  u.svg(plot({h:220,logx:1,x:[1,5e7],y:[0,280],xl:'avstand (m), logaritmisk',yl:'tap (dB)',xt:[1,100,1e4,1e6],xf:x=>x>=1000?x/1000+' km':x+' m',yt:[0,100,200],aria:'Tap mot avstand',s:[{p:ds.map(d=>[d,L(d)])}],post:(X,Y)=>`<circle cx="${X(v.d)}" cy="${Y(L(v.d))}" r="5" fill="var(--c2)"/>`}));
- u.out(`$\\lambda=$ <span class="v">${lam<1?nb(lam*100,2)+' cm':nb(lam,2)+' m'}</span>. Tap: <span class="v">${L(v.d).toFixed(1)} dB</span>. Doble avstanden gir +6 dB. Doble frekvensen gir også +6 dB. Prøv satellittoppgaven: 10 GHz, 40 000 km og 92 dB gain gir 112,5 dB.`)})};
+ u.out(`$\\lambda=c/f=$ <span class="v">${lam<1?nb(lam*100,2)+' cm':nb(lam,2)+' m'}</span>. Tap $L=20\\log_{10}(4\\pi d/\\lambda)-G_t-G_r=$ <span class="v">${L(v.d).toFixed(1)} dB</span>. Doble avstanden gir +6 dB. Doble frekvensen gir også +6 dB. Prøv satellittoppgaven: 10 GHz, 40 000 km og 92 dB gain gir 112,5 dB.`)})};
 
 W.multipath=r=>{const u=ui(r,'Flerveis og ISI');u.params({
  T:{l:'Symboltid',min:1,max:20,step:.5,v:4,f:x=>x+' µs'},
@@ -88,7 +88,7 @@ W.multipath=r=>{const u=ui(r,'Flerveis og ISI');u.params({
  const tau=v.d/300,W_=640,N=3,sc=560/(N*v.T+Math.max(tau,1));
  const bar=(y,off,h,al)=>[0,1,2].map(i=>`<rect x="${60+(i*v.T+off)*sc}" y="${y}" width="${v.T*sc-1.5}" height="${h}" fill="var(--c${i+1})" opacity="${al}"/><text x="${60+(i*v.T+off+v.T/2)*sc}" y="${y+h/2+4}" text-anchor="middle" font-size="12">${'ABC'[i]}</text>`).join('');
  u.svg(`<svg viewBox="0 0 ${W_} 130" role="img" aria-label="Direkte og forsinket signal"><text x="4" y="38" font-size="12">Direkte</text>${bar(20,0,30,.85)}<text x="4" y="86" font-size="12">Ekko</text>${bar(68,tau,30,.45)}<line x1="${60+v.T*sc}" x2="${60+v.T*sc}" y1="12" y2="104" stroke="var(--bad)" stroke-dasharray="4 3"/><text x="${60+v.T*sc}" y="120" font-size="11" text-anchor="middle" class="axt">symbol A slutter</text></svg>`);
- const q=tau/v.T;u.out(`Forsinkelse $\\tau=\\Delta d/c=$ <span class="v">${tau.toFixed(1)} µs</span> ($${(q*100).toFixed(0)}\\,\\%$ av symboltiden). ${q<.1?'<span class="okc">Lite overlapp.</span>':q<1?'<span class="amc">Ekkoet av A faller inn i B: ISI.</span>':'<span class="noc">Ekkoet er lengre enn et helt symbol, så ISI er alvorlig.</span>'} Gjør symbolet lengre og se hva som skjer. Det er akkurat det OFDM gjør.`)})};
+ const q=tau/v.T;u.out(`Forsinkelse $\\tau=\\Delta d/c=$ <span class="v">${tau.toFixed(1)} µs</span> ($\\tau/T_s=${(q*100).toFixed(0)}\\,\\%$ av symboltiden). ${q<.1?'<span class="okc">Lite overlapp.</span>':q<1?'<span class="amc">Ekkoet av A faller inn i B: ISI.</span>':'<span class="noc">Ekkoet er lengre enn et helt symbol, så ISI er alvorlig.</span>'} Gjør symbolet lengre og se hva som skjer. Det er akkurat det OFDM gjør.`)})};
 
 W.fading=r=>{const u=ui(r,'Hvilken fading er det?');u.params({
  Tc:{l:'Koherenstid Tc',min:.01,max:1000,log:1,v:70,f:x=>x>=1?nb(x,1)+' ms':nb(x*1000,0)+' µs'},
@@ -117,13 +117,13 @@ W.constell=r=>{const u=ui(r,'Konstellasjon under støy');u.params({
   const px=cx+x*S*.72,py=cy-y*S*.72;if(px>2&&px<258&&py>2&&py<258)dots+=bad?`<circle cx="${px}" cy="${py}" r="3" fill="none" stroke="var(--bad)" stroke-width="1.3"/>`:`<circle cx="${px}" cy="${py}" r="1.6" fill="var(--c1)" opacity=".65"/>`}
  const bits=Math.log2(P.length),ideal=P.map(p=>`<circle cx="${cx+p[0]*S*.72}" cy="${cy-p[1]*S*.72}" r="3" fill="none" stroke="currentColor"/>`).join('');
  u.svg(`<svg viewBox="0 0 260 260" style="max-width:300px;margin:auto" role="img" aria-label="Konstellasjonsdiagram med støy"><line class="gr" x1="0" x2="260" y1="130" y2="130"/><line class="gr" x1="130" x2="130" y1="0" y2="260"/>${dots}<g style="color:var(--ink)">${ideal}</g></svg>`);
- u.out(`<span class="v">${bits} bit/symbol</span>, ${P.length} symboler. Feiltolkede symboler (ringer): <span class="${err/N>.01?'noc':'okc'}">${(100*err/N).toFixed(1)} %</span>. Flere bit per symbol gir høyere datarate, men punktene står tettere, så samme støy gir flere feil.`)})};
+ u.out(`$\\log_2 M=\\log_2 ${P.length}=$ <span class="v">${bits} bit/symbol</span>, ${P.length} symboler. Feiltolkede symboler (ringer): <span class="${err/N>.01?'noc':'okc'}">${(100*err/N).toFixed(1)} %</span>. Flere bit per symbol gir høyere datarate, men punktene står tettere, så samme støy gir flere feil.`)})};
 
 const CQI=[[1,'QPSK',78,.1523,-6.3],[2,'QPSK',193,.377,-2.6],[3,'QPSK',449,.877,1.2],[4,'16QAM',378,1.4766,5.1],[5,'16QAM',490,1.9141,6.9],[6,'16QAM',616,2.4063,8.8],[7,'64QAM',466,2.7305,10.8],[8,'64QAM',567,3.3223,12.7],[9,'64QAM',666,3.9023,14.6],[10,'64QAM',772,4.5234,16.3],[11,'64QAM',873,5.1152,18.2],[12,'256QAM',711,5.5547,20.2],[13,'256QAM',797,6.2266,21.9],[14,'256QAM',885,6.9141,23.8],[15,'256QAM',948,7.4063,25.8]];
 W.amc=r=>{const u=ui(r,'AMC: terminalen beveger seg bort fra masten');u.params({d:{l:'Avstand fra masten',min:50,max:3000,log:1,v:300,f:x=>Math.round(x)+' m'},B:{l:'Kanalbredde',min:5,max:20,step:5,v:20,f:x=>x+' MHz'}},v=>{
  const snr=35-35*Math.log10(v.d/50)/1.6*1;const c=[...CQI].reverse().find(x=>snr>=x[4]);const cq=c||null;const W_=640,bw=W_/15;
  let h=`<svg viewBox="0 0 ${W_} 110" role="img" aria-label="CQI-skala">`;CQI.forEach((x,i)=>{const on=cq&&x[0]===cq[0],hh=x[3]*11;h+=`<rect x="${i*bw+2}" y="${88-hh}" width="${bw-4}" height="${hh}" fill="${on?'var(--c2)':'var(--c1)'}" opacity="${on?1:.3}"/><text x="${i*bw+bw/2}" y="103" text-anchor="middle" class="axt">${x[0]}</text>`});u.svg(h+'</svg>');
- u.out(cq?`SNR ≈ <span class="v">${snr.toFixed(1)} dB</span> gir CQI <b>${cq[0]}</b>: ${cq[1]}, koderate ${cq[2]}/1024, $\\eta=${cq[3]}$ bit/s/Hz. Datarate ≈ <span class="v">${(cq[3]*v.B).toFixed(1)} Mbps</span>. Stolpene viser spektraleffektivitet for hver CQI.`:`SNR ≈ <span class="v">${snr.toFixed(1)} dB</span>. Kanalen er for dårlig selv for CQI 1, så forbindelsen faller ut.`)})};
+ u.out(cq?`SNR ≈ <span class="v">${snr.toFixed(1)} dB</span> gir CQI <b>${cq[0]}</b>: ${cq[1]}, koderate ${cq[2]}/1024, $\\eta=${cq[3]}$ bit/s/Hz. Datarate $R=\\eta B\\approx$ <span class="v">${(cq[3]*v.B).toFixed(1)} Mbps</span>. Stolpene viser spektraleffektivitet for hver CQI.`:`SNR ≈ <span class="v">${snr.toFixed(1)} dB</span>. Kanalen er for dårlig selv for CQI 1, så forbindelsen faller ut.`)})};
 
 W.diversity=r=>{const u=ui(r,'Diversitet: uavhengig fading');const mk=s=>{const g=rng(s),a=[];for(let i=0;i<7;i++)a.push([g()*18+2,g()*6.28]);return t=>{let re=0,im=0;a.forEach(([f,p])=>{re+=Math.cos(f*t+p);im+=Math.sin(f*t+p)});return 10*Math.log10((re*re+im*im)/7+1e-3)}};const B=[mk(3),mk(11),mk(29)];
  u.params({n:{l:'Antall antenner',opt:[[1,'1'],[2,'2'],[3,'3']],v:1},th:{l:'Terskel for brukbart signal',min:-15,max:0,v:-6,f:x=>x+' dB'}},v=>{
@@ -148,7 +148,7 @@ W.fhss=r=>{const u=ui(r,'FHSS: langsom eller rask hopping?');u.params({
  let h=`<svg viewBox="0 0 640 180" role="img" aria-label="Hoppmønster"><rect x="40" y="${10+bad*22}" width="590" height="22" fill="var(--badbg)"/><text x="4" y="${26+bad*22}" font-size="11" fill="var(--bad)">fade</text>`;
  seq.forEach((c,i)=>{h+=`<rect x="${42+i*36.6}" y="${12+c*22}" width="34" height="18" fill="${c===bad?'var(--bad)':'var(--c1)'}"/>`});u.svg(h+`<text x="335" y="175" text-anchor="middle" class="axt">tid → hver blokk er ett hopp</text></svg>`);
  const hit=seq.filter(c=>c===bad).length;
- u.out(`Symbolrate: <span class="v">${nb(rs,0)} symboler/s</span>. Symboltid: <span class="v">${nb(ts,3)} µs</span>. Per hopp: <span class="v">${nb(per,per<1?3:1)} symboler</span>. Dette er <b>${fast?'rask':'langsom'} hopping</b>. Bare ${hit} av ${seq.length} hopp lander i det fadede kanalområdet, så skaden blir kortvarig.`)})};
+ u.out(`Symbolrate $R_s=R/\\log_2 M=$ <span class="v">${nb(rs,0)} symboler/s</span>. Symboltid $T_s=1/R_s=$ <span class="v">${nb(ts,3)} µs</span>. Per hopp $T_{hopp}/T_s=$ <span class="v">${nb(per,per<1?3:1)} symboler</span>. Dette er <b>${fast?'rask':'langsom'} hopping</b>. Bare ${hit} av ${seq.length} hopp lander i det fadede kanalområdet, så skaden blir kortvarig.`)})};
 
 W.parity2d=r=>{const u=ui(r,'Todimensjonal paritet: klikk på bit for å flippe dem','Prøv selv');const D=[[1,1,0,0,1,1,1],[1,0,1,1,1,0,1],[0,1,1,1,0,0,1],[0,1,0,1,0,0,1]];const fl=new Set();const par=a=>a.reduce((x,y)=>x^y,0);
  const rp=D.map(par),cp=D[0].map((_,j)=>par(D.map(x=>x[j]))),cc=par(rp);
