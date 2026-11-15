@@ -242,3 +242,89 @@ textarea{width:100%;min-height:100px;font:400 18px/1.4 var(--sans);padding:11px 
 .op.sel::before{content:"● ";color:var(--acc)}
 .ratbar{position:sticky;bottom:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:18px;padding:12px 16px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
 .ratbar #rcnt{font:700 16px var(--sans);margin-right:auto}
+
+/* Flashcards og Lær */
+.fopt{display:flex;flex-wrap:wrap;gap:12px 28px;margin:8px 0 4px}
+.fopt label{display:block;font:700 13px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.fhelp{font-size:17px;color:var(--mut);margin:.9em 0 0}
+.fwrap{max-width:780px;margin-top:20px}
+.fstat{display:flex;flex-wrap:wrap;gap:4px 22px;font:400 16.5px var(--sans);color:var(--mut);margin-bottom:7px}
+.fstat b{color:var(--opt);font-variant-numeric:tabular-nums}
+.fkind{font:700 13.5px var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--chk);margin-top:16px}
+.fcard{perspective:1500px;cursor:pointer;margin:12px 0 16px;border-radius:var(--r)}
+.fin{display:grid;transform-style:preserve-3d;transition:transform .35s}
+.fcard.flip .fin{transform:rotateX(180deg)}
+.fface{grid-area:1/1;position:relative;min-height:320px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:50px 34px 46px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh2);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.fface.fbk{transform:rotateX(180deg);background:var(--ana-bg)}
+.fface small{position:absolute;top:15px;left:22px;font:700 13px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--mut)}
+.fface em{position:absolute;bottom:13px;left:0;right:0;font:italic 400 14.5px var(--sans);color:var(--mut)}
+.fface .tx{font-size:31px;line-height:1.22;font-weight:700;color:var(--opt);text-wrap:balance}
+.fface .tx.long{font-size:23px;line-height:1.4;font-weight:400;color:var(--ink)}
+.fact{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.fact .btn{flex:1 1 180px;max-width:280px;padding:12px 16px;font-size:18px}
+.btn.fno{border-color:var(--trap);color:var(--trap)}
+.btn.fyes{background:var(--opt);border-color:var(--opt);color:#fff}
+.srb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.srb button{padding:11px 6px 9px;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:var(--rs);cursor:pointer;transition:box-shadow .15s,border-color .15s}
+.srb button:hover:not(:disabled){border-color:var(--acc);box-shadow:var(--sh)}
+.srb button:disabled{opacity:.45;cursor:default}
+.srb b{display:block;font:700 18px var(--sans);color:var(--opt)}
+.srb span{display:block;font:400 15px var(--sans);color:var(--mut);margin-top:2px}
+.fhint{text-align:center;font-size:16px;color:var(--mut);margin:.6em 0 0}
+.ftools{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;align-items:center;margin-top:26px}
+.ftools span{margin-right:auto;font-size:15px;color:var(--mut)}
+.ftools .btn{font-size:15px;padding:5px 12px}
+.fdone{margin:16px 0;padding:22px 24px;border-radius:var(--r);background:var(--goal-bg);box-shadow:var(--sh)}
+.fdone>b{font-size:23px;color:var(--goal)}
+.fdone p{margin:.4em 0 .8em}
+.lbar{display:flex;height:8px;background:var(--panel2);border-radius:99px;overflow:hidden}
+.lbar i{display:block;height:100%}.lbar .m{background:var(--opt)}.lbar .k{background:var(--c2)}
+.lq{margin-top:18px}
+.lp{font-size:27px;line-height:1.3;font-weight:700;color:var(--opt);margin:4px 0 14px;text-wrap:balance}
+.lq .op .k{display:inline-block;min-width:1.5em;font-weight:700;color:var(--mut)}
+.lq .op.right::before,.lq .op.wrong::before{content:""}
+.lq .fb .btn{margin-left:8px}
+.lsum td:first-child{font-weight:700;color:var(--opt);width:28%}
+.lsum td:last-child{white-space:nowrap;text-align:right}
+.chip{display:inline-block;font:700 13.5px var(--sans);padding:2px 10px;border-radius:999px;background:var(--panel2);color:var(--mut)}
+.chip.m{background:var(--opt);color:#fff}.chip.x{background:var(--trap-bg);color:var(--trap)}
+@media (max-width:560px){.srb{grid-template-columns:repeat(2,minmax(0,1fr))}.fface{min-height:260px;padding:46px 18px 42px}.fface .tx{font-size:26px}.fface .tx.long{font-size:20px}.lp{font-size:23px}}
+/* Fullskjerm for Flashcards og Lær */
+.ftop{display:flex;justify-content:flex-end;align-items:center;gap:12px;max-width:780px;margin-top:16px}
+.ftop span{display:none;margin-right:auto;font:700 17px var(--sans);color:var(--mut)}
+.ftop+.fwrap{margin-top:6px}
+body.fcfull #side,body.fcfull #menuBtn,body.fcfull #readBar,body.fcfull #fcRoot>.eyebrow,body.fcfull #fcRoot>h1,body.fcfull #fcRoot>.lead,body.fcfull #fcRoot>.fopt,body.fcfull #fcRoot>.fhelp{display:none}
+body.fcfull #main{margin-left:0;padding:0 20px 40px}
+body.fcfull .page{display:block;max-width:none}
+body.fcfull .ftop{position:sticky;top:0;z-index:6;max-width:none;margin:0 -20px;padding:11px 20px;background:var(--panel);border-bottom:1px solid var(--line)}
+body.fcfull .ftop span{display:block}
+body.fcfull .fwrap{max-width:920px;margin:30px auto 0}
+body.fcfull .fface{min-height:min(54vh,480px)}
+/* Fremdriftslinjen i Lær: ett felt per runde */
+.qbar{display:flex;align-items:center;gap:5px;margin:2px 0 6px}
+.qbar i{flex:1 1 0;min-width:2px;height:12px;border-radius:99px;background:var(--line);overflow:hidden}
+.qbar i b{display:block;height:100%;background:var(--opt);border-radius:99px}
+.qn{flex:0 0 auto;min-width:38px;height:38px;padding:0 9px;border-radius:99px;display:grid;place-items:center;font:700 16px var(--sans);font-variant-numeric:tabular-nums;background:var(--line);color:var(--ink)}
+.qn.on{background:var(--opt);color:#fff}
+.lp.long{font-size:22px;line-height:1.4;font-weight:400;color:var(--ink)}
+.lq textarea{min-height:0;margin-bottom:12px}
+.lans{margin:0 0 14px;padding:13px 16px;border-radius:14px;background:var(--ana-bg);font-size:19px}
+.lans small{display:block;font:700 13px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin-bottom:3px}
+/* Egne farger for Flashcards og Lær: blått for valg, grønt for det du kan, gult for usikkert og rødt for det du ikke kan */
+#fcRoot{--ink:#22283A;--mut:#626A80;--line:#DCE0EA;--panel2:#F2F4F9;--acc:#3A6FD8;--accbg:#E6EEFC;--opt:#27324F;
+ --good:#2E9461;--goodbg:#E2F5EA;--bad:#D0452F;--badbg:#FCE8E3;--amb:#B97A0A;--ambbg:#FCF2DA;--ana-bg:#EEF3FE;
+ --chk:#3A6FD8;--exam:#626A80;--trap:#D0452F;--trap-bg:#FCE8E3;--goal:#1F7A4D;--goal-bg:#E2F5EA;
+ --sh:0 1px 3px rgba(34,40,58,.07),0 6px 22px rgba(34,40,58,.08);--sh2:0 2px 6px rgba(34,40,58,.09),0 12px 30px rgba(34,40,58,.12);color:var(--ink)}
+#fcRoot .btn.pri{box-shadow:0 3px 10px rgba(58,111,216,.28)}
+#fcRoot .btn.fyes{background:var(--good);border-color:var(--good);color:#fff}
+#fcRoot .btn.fno{border-color:var(--bad);color:var(--bad)}
+#fcRoot .bar i,#fcRoot .qbar i b{background:var(--good)}
+#fcRoot .qn.on{background:var(--good)}
+#fcRoot .chip.m{background:var(--good)}
+.srb button[data-g="0"]{--g:var(--bad);--gb:var(--badbg)}
+.srb button[data-g="1"]{--g:var(--amb);--gb:var(--ambbg)}
+.srb button[data-g="2"]{--g:var(--good);--gb:var(--goodbg)}
+.srb button[data-g="3"]{--g:var(--acc);--gb:var(--accbg)}
+#fcRoot .srb button{background:var(--gb);border-color:transparent}
+#fcRoot .srb button:hover:not(:disabled){border-color:var(--g)}
+#fcRoot .srb b{color:var(--g)}

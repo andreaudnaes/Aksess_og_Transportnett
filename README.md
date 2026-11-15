@@ -46,6 +46,14 @@ Del I handler om trådløse nett, del II om optiske nett og transportnett.
 - **Tegneoppgaver:** figurene du må kunne tegne selv.
 - **Prøveeksamen:** en hel eksamen å ta på tid.
 
+## Flashcards
+
+525 kort fordelt på fem bolker. Forsiden er det engelske begrepet eller et spørsmål, baksiden er forklaringen på norsk.
+
+- **Flashcards:** snu kortet og vurder selv. Med vanlig sortering stokkes kort du ikke kan inn igjen i bunken. Med spaced repetition gir du kortet en av fire vurderinger (gjenta, vanskelig, greit, lett), og vurderingen bestemmer om kortet kommer tilbake om noen minutter eller om flere dager.
+- **Lær:** runder på sju nye kort. Først får du flervalg på alle kortene. Så får du begrepet eller spørsmålet, skriver svaret selv, ser fasiten og vurderer om du klarte det. Neste runde åpner når du har klart alle, og en linje øverst viser hvor langt du har kommet.
+- **Fullskjerm:** begge sidene kan vises i fullskjerm, der menyen og valgene skjules. Esc lukker.
+
 ## Oppslag
 
 - **Repeter feil:** samler oppgavene du har svart feil på.
@@ -62,6 +70,7 @@ Del I handler om trådløse nett, del II om optiske nett og transportnett.
 | `assets/glossary.js`, `assets/glossary-en.js` | Ordlisten på norsk og engelsk |
 | `assets/w1.js` – `assets/w3.js`, `assets/figs.js` | Interaktive figurer og illustrasjoner |
 | `assets/bank.js`, `assets/rat.js`, `assets/exam.js` | Oppgavebank, RAT-quizer og eksamenssidene |
+| `assets/cards.js`, `assets/flash.js` | Flashcardene og sidene Flashcards og Lær |
 | `assets/katex/` | KaTeX, som viser formlene |
 
 ## Kilder
